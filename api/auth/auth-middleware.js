@@ -1,10 +1,8 @@
-const db = require('../../data/dbConfig')
+const User = require('./auth-model')
 
-async function checkUserExist(req, res, next) {
+async function checkUsernameExist(req, res, next) {
     const { username } = req.body
-    const exist = await db('users')
-        .where({ username })
-        .first()
+    const exist = await User.findBy({ username }).first()
     if (exist) {
         next({
             status: 400,
@@ -15,7 +13,7 @@ async function checkUserExist(req, res, next) {
     }
 }
 
-function validateUsername(req, res, next) {
+function validateUserPayload(req, res, next) {
     const { username, password } = req.body
     if (
         username === undefined ||
@@ -30,7 +28,22 @@ function validateUsername(req, res, next) {
     }
 }
 
+async function checkLoginUsername(req, res, next) {
+    const { username } = req.body
+
+    const exist = await User.findBy({ username }).first()
+    if (!exist) {
+        next({
+            status: 401,
+            message: 'invalid credentials'
+        })
+    } else {
+        next()
+    }
+}
+
 module.exports = {
-    checkUserExist,
-    validateUsername
+    checkUsernameExist,
+    validateUserPayload,
+    checkLoginUsername
 }
