@@ -3,10 +3,11 @@ const bcrypt = require('bcryptjs')
 const Users = require('./auth-model')
 const { checkUsernameExist, validateUserPayload, checkLoginUsername } = require('./auth-middleware')
 const tokenBuilder = require('./token-builder')
+require('dotenv').config()
 
 router.post('/register', validateUserPayload, checkUsernameExist, (req, res, next) => {
   let user = req.body
-  const rounds = process.env.HASH_ROUNDS || 4
+  const rounds = parseInt(process.env.BCRYPT_ROUNDS) || 4
   const hash = bcrypt.hashSync(user.password, rounds)
   user.password = hash
 
