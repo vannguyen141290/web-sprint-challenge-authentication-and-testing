@@ -53,6 +53,22 @@ Your finished project must include all of the following requirements (further in
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics.
 
 1. Differences between using _sessions_ or _JSON Web Tokens_ for authentication.
+
+- Users send to server credentials which normally contain username and password. The server then verifies the credentials and create a session using sessions library. The session then produces cookies. Server responses to users' request by sending back cookies with session id. Users send the cookie together with whatever request they want to the server and server will response with the right data if cookies is valid.
+- JWT is created by using jsonwebtoken Library. It is sent back to users when credential is verified. Users then store the token in local store and do not need to send the token whenever they want to send a request. The front end developers will take care of how to protect certain resoucers by building private routes using token.
+
 2. What does `bcryptjs` do to help us store passwords in a secure manner?
+
+- It hashes the password to make it a total different string that hackers will have difficulties to figure out. Also bcryptjs adds what is called salt which becomes a part of the hashed password string which increase the secure level.
+
 3. How are unit tests different from integration and end-to-end testing?
+
+- unit tests check the correctness of a piece of code in isolation, for example, test if a function works and returns a correct value
+- integration tests test how different parts work well together. for example, endpoint testing
+- end-to-end testing is used to test the UI. it simulates behavior of users interacting with the webpage, for example, clicking, hovering. It is also used to test data access in database
+
 4. How does _Test Driven Development_ change the way we write applications and tests?
+
+- we build the tests during the development process. Normally, developers would build the webpage and proceed to the testing phase before production. TDD requires testing each small funtionality or pieace of codes first. if the codes are not working well, they would rewrite it. this way, it will be easier to catch and resolve bugs
+
+
